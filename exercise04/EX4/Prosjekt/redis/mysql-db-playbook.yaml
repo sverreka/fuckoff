@@ -1,0 +1,14 @@
+---
+- hosts: mysql
+
+
+  tasks:
+    - name: install mariadb
+      become: yes
+      yum: 
+        name: mariadb-server 
+        state: present
+    - name: starting mariadb
+      become: yes
+      shell: systemctl start mariadb
+

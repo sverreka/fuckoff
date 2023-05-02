@@ -1,0 +1,97 @@
+---
+
+- name: required greier
+  hosts: git 
+  become: yes 
+  tasks: 
+  - name: Install dependencies
+    yum: name={{ item }} state=latest
+    with_items:
+      - htop
+      - git-all
+      - python-devel
+      - python3-pip
+ 
+      # - python-docker
+  - name: Install and upgrade pip
+    pip:
+      name: pip
+      extra_args: --upgrade
+      executable: pip3
+
+
+- name: pull fra github 
+  hosts: git 
+  become: yes
+  tasks: 
+  - name: Get stuff from git
+    become: yes
+    ansible.builtin.git:
+      repo: https://github.com/skandix/CTFd.git
+      dest: /home/vagrant/github
+
+# - name: endre filen 
+#   hosts: all
+#   become: yes 
+#   tasks: 
+#   - name: endre docker compose filen 
+
+
+# - name: pip fix
+#   hosts: all
+#   become: true
+#   tasks:
+#   - name: install python-is-python3
+#     update_cache: yes
+#     yum: name={{ item }} state=present
+#       - python-is-python3
+#   - name: creating alias
+#     shell: 
+#       cmd: echo alias pip=pip3 >> ~/.bashrc
+
+#   - name: test and upgrade pip
+#     pip: name=pip state=latest
+#     tags:
+#       - packages
+
+# - name: upgrade pip
+#   hosts: git 
+#   become: yes 
+#   tasks:  
+#     shell: 
+#       cmd: pip install --upgrade pip
+
+# - name: Install or update pip
+#   community.general.easy_install:
+#     name: pip
+#     state: latest
+#   become: yes
+
+# - name: pip
+#   hosts: git 
+#   become: yes 
+#   tasks: 
+#   - name: fuck offff
+#     shell:
+#       chdir: /home/vagrant/github
+#       cmd: pip3 install -r requirements.txt
+
+# - name: endre config ini 
+#   hosts: all 
+#   become: yes 
+#   tasks: 
+#   - name: endre ini 
+#     ini_file
+
+# - name: docker kjør
+#   hosts: git 
+#   become: yes 
+#   tasks: 
+#   - name: docker docker docker docker 
+#     shell: cd github 
+#   - name: docekr kjøring
+#     shell: docker-compose up
+    
+
+
+

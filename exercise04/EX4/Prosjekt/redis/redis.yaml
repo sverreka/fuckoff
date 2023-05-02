@@ -1,0 +1,65 @@
+---
+
+- name: redis installasjon
+  hosts: redis
+  become: yes
+  vars:
+    redis_port: 6379
+    redis_databases: 1
+
+    
+  tasks:
+    - name: docker 1
+      shell: 
+        cmd: docker run -d --name redis-stack-server -p 6379:6379 redis/redis-stack-server:latest
+    # - name: docker 2
+    #   shell:
+    #     cmd: docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 redis/redis-stack:latest
+
+  
+
+
+# - name: redis playbook  
+#   hosts: redis
+#   become: yes
+#   vars:
+#     redis_port: 6379
+#     redis_databases: 1
+#   tasks:
+#     - name: Enable EPEL repository
+#       yum:
+#         name: epel-release
+#         state: latest
+
+
+#     - name: Install Redis
+#       ansible.builtin.get_url:
+#         url: https://download.redis.io/redis-stable.tar.gz
+#         dest: /home/vagrant
+#     - name: untar redis
+#       shell:
+#         cmd: tar -xzvf redis-stable.tar.gz
+        
+#     - name: make redis
+#       shell: 
+#         chdir: redis-stable
+#         cmd: make
+
+#     - name: redis 2
+#       shell:
+#         chdir: redis-stable
+#         cmd: make install
+        
+
+#     - name: Configure Redis
+#       template:
+#         src: redis.conf.j2
+#         dest: /etc/redis.conf
+#       notify: Restart Redis
+#   handlers:
+#     - name: Restart Redis
+#       systemd:
+#         name: redis
+#         state: restarted
+
+
